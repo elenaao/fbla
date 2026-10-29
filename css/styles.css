@@ -1,0 +1,248 @@
+/* ==========================================================
+   Book availability page – styles
+   Sections: 1 Colors  2 Base  3 Header  4 Filter  5 Book cards
+             6 Footer  7 Responsive and accessibility settings
+   ========================================================== */
+
+/* 1. COLORS */
+:root {
+  --ink: #281d1f;
+  --muted: #3f332e;
+  --paper: #efe6d0;
+  --card: #efe8d9;
+  --line: #ceb89d;
+  --brand: #4a3739;
+  --ok-fg: #8faf7e;   --ok-bg: #f7ffef;
+  --out-fg: #8a2b1f;  --out-bg: #fbe5e1;
+  --hold-fg: #5a3a00; --hold-bg: #fdf0cf;
+  --focus: #382119;
+}
+/* Dark mode: swaps the same variables when the visitor's device
+   is set to a dark theme. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8eeee;
+    --muted: #aab6b6;
+    --paper: #101a1b;
+    --card: #172425;
+    --line: #34474a;
+    --brand: #601A4A;
+    --ok-fg: #9be3b4;
+    --ok-bg: #153a24;
+    --out-fg: #ffb4a8; 
+    --out-bg: #4a1d17;
+    --hold-fg: #C6D4E1;
+    --hold-bg: #433108;
+    --focus: #44749D;
+  }
+}
+/* 2. BASE*/
+*, *::before, *::after { 
+  box-sizing: border-box;
+ }
+html { 
+  -webkit-text-size-adjust: 100%; 
+}
+/* The env() padding keeps content clear of phone notches and rounded corners. */
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 1rem/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+}
+/* Skip link: hidden off-screen until a keyboard user tabs to it,
+   so they can jump past the header straight to the book list. */
+.skip {
+  position: absolute; left: .5rem; top: -4rem;
+  background: var(--ink); color: var(--paper);
+  padding: .6rem 1rem; border-radius: .4rem; z-index: 10;
+}
+.skip:focus { 
+  top: .5rem; 
+}
+/* Clear outline on whatever element has keyboard focus. */
+:focus-visible { 
+  outline: 3px solid var(--focus); 
+  outline-offset: 3px; 
+}
+
+/* .wrap centers content and keeps line lengths readable. */
+.wrap {
+   width: min(100% - 2rem, 70rem);
+    margin-inline: auto;
+   }
+/* 3. HEADER */
+.intro { 
+  border-bottom: 1px solid var(--line);
+   padding-block: 1.5rem 1.25rem; 
+  }
+/* clamp(min, preferred, max) makes the title scale smoothly with screen width. */
+h1 {
+  margin: .25rem 0 .5rem;
+  font: 700 clamp(1.9rem, 5vw, 3rem)/1.1 "Iowan Old Style", Palatino, Georgia, serif;
+  letter-spacing: -.01em;
+}
+.lede {
+   margin: 0;
+    max-width: 60ch;
+     color: var(--muted);
+     }
+
+/* 4. FILTER
+   Real radio buttons are visually hidden (but still usable with a
+   keyboard and screen reader) */
+fieldset.filter {
+  border: 0; 
+  margin: 1.5rem 0 1rem; 
+  padding: 0; 
+  }
+.filter legend {
+  font-weight: 600; 
+  padding: 0;
+  margin-bottom: .5rem;
+   }
+.options {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: .5rem;
+   }
+/* Hide the radio circle without removing it from the page */
+.options input {
+  position: absolute;
+  opacity: 0;
+  width: 1px; 
+  height: 1px; 
+}
+/* min-height 2.75rem (44px) gives a comfortable touch target */
+.options label {
+  display: inline-flex; 
+  align-items: center; 
+  min-height: 2.75rem;
+  padding: .4rem 1rem;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  cursor: pointer;
+  font-weight: 500;
+}
+/* Selected button: filled color AND bolder text, so it doesn't rely on color alone */
+.options input:checked + label {
+  border-color: var(--brand);
+  background: var(--brand); color: var(--paper); font-weight: 700;
+}
+/* Show the focus outline on the label when the hidden radio is focused */
+.options input:focus-visible + label { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+/* CSS-only filtering: when a radio is checked, :has() */
+body:has(#f-available:checked) .book:not([data-status="available"]),
+body:has(#f-out:checked) .book:not([data-status="out"]),
+body:has(#f-hold:checked) .book:not([data-status="hold"]),
+/* The category filter hides books the same way, so both filters can be combined */
+body:has(#c-fiction:checked) .book:not([data-cat="fiction"]),
+body:has(#c-nonfiction:checked) .book:not([data-cat="nonfiction"]) { display: none; }
+
+/* Hidden on screen but still read aloud by screen readers */
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* 5. BOOK CARDS*/
+.books {
+  list-style: none; margin: 0; padding: 0 0 3rem;
+  display: grid; gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+}
+/* Left padding leaves room for the spine drawn by ::before below */
+.book {
+  position: relative; display: flex; flex-direction: column; gap: .35rem;
+  background: var(--card); border: 1px solid var(--line); border-radius: .5rem;
+  padding: 1rem 1rem 1rem 2.4rem; overflow: hidden;
+}
+/* The book "spine. */
+.book::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 1.6rem;
+  background:
+    linear-gradient(var(--card), var(--card)) 0 18% / 100% 2px no-repeat,
+    linear-gradient(var(--card), var(--card)) 0 82% / 100% 2px no-repeat,
+    var(--spine, var(--brand));
+  opacity: .95;
+}
+.book h3 { margin: 0; font: 700 1.2rem/1.25 "Iowan Old Style", Palatino, Georgia, serif; }
+.author { margin: 0; color: var(--muted); }
+.shelf { margin: 0; color: var(--muted); font-size: .9rem; }
+/* Status badge: icon + text + border, so meaning never depends on color */
+.status {
+  display: inline-flex; align-items: center; gap: .5rem; align-self: flex-start;
+  margin: .5rem 0 0; padding: .35rem .8rem; border-radius: .4rem;
+  font-weight: 700; border: 2px solid currentColor;
+}
+.status svg { width: 1.1rem; height: 1.1rem; flex: none; }
+/* Badge colors per status, picked by the data-status attribute */
+[data-status="available"] .status { color: var(--ok-fg);   background: var(--ok-bg); }
+[data-status="out"] .status       { color: var(--out-fg);  background: var(--out-bg); }
+[data-status="hold"] .status      { color: var(--hold-fg); background: var(--hold-bg); }
+.note { margin: .25rem 0 0; font-size: .9rem; }
+
+/* 6. FOOTER */
+footer { border-top: 1px solid var(--line); padding-block: 1.25rem 2rem; color: var(--muted); font-size: .9rem; }
+
+/* 7. RESPONSIVE AND ACCESSIBILITY SETTINGS */
+
+/* Small phones: filter buttons fill the row, two per line */
+@media (max-width: 30rem) { .options label { flex: 1 1 calc(50% - .5rem); justify-content: center; } }
+/* Only animate for visitors who haven't asked for reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .options label { transition: background-color .15s, border-color .15s; }
+}
+/* Windows High Contrast mode: use system colors so badges and the
+   selected filter button stay visible */
+@media (forced-colors: active) {
+  .status { border: 2px solid CanvasText; }
+  .options input:checked + label { outline: 3px solid ; }
+}
+
+/* 8. NAVIGATION. */
+.site-header { background: var(--card); border-bottom: 1px solid var(--line); }
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem 1.5rem; padding-block: .5rem; }
+.brand { font: 900 1.2rem/1.2 "Iowan Old Style", Palatino, Georgia, serif; color: var(--brand); text-decoration: none; }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem; }
+nav a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .25rem .85rem; color: var(--ink); text-decoration: none; font-weight: 500; }
+nav a:hover { text-decoration: underline; }
+/* Current page: bold text plus an underline bar, so it doesn't rely on color alone */
+nav a[aria-current="page"] { font-weight: 700; box-shadow: inset 0 -3px 0 var(--brand); }
+
+/* 9. PAGES AND FORMS */
+.page { padding-block: 2rem 3rem; }
+.page p, .page li { max-width: 65ch; }
+.page h2 { margin-top: 2rem; }
+.form { display: grid; gap: 1rem; max-width: 34rem; margin-block: 1.5rem; }
+.field label { display: block; font-weight: 600; margin-bottom: .25rem; }
+.field input, .field textarea {
+  width: 100%; min-height: 2.75rem; padding: .55rem .75rem;
+  font: inherit; color: var(--ink); background: var(--card);
+  border: 2px solid var(--muted); border-radius: .4rem;
+}
+.field textarea { min-height: 8rem; resize: vertical; }
+.hint { margin: .25rem 0 0; color: var(--muted); font-size: .9rem; }
+.btn {
+  justify-self: start; min-height: 2.75rem; padding: .5rem 1.4rem;
+  font: inherit; font-weight: 700; cursor: pointer;
+  color: var(--paper); background: var(--brand);
+  border: 2px solid var(--brand); border-radius: .4rem;
+}
+/* 10. LOCATION SECTION */
+.contact-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+.container { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 2rem; }
+.location-info { flex: 1 1 300px; max-width: fit-content;}
+.map-container { flex: 1 1 300px; align-self: center; justify-content: start; display: flex; }
+.info-block { margin-bottom: 1rem; }
+.info-block strong { display: block; margin-bottom: .25rem; }
+iframe { border-radius: 90%; border: 5px solid #7b3641;width: 300px;height: 300px; transition:  0.3s ease;opacity: 0.8; }
+iframe:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+/* colored scroll bar */
+*{
+  scrollbar-width: thin;
+  scrollbar-color: brown;
+}
