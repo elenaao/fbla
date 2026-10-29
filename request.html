@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a Book</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body>
+    <!--Navigation-->
+<header class="siteheader">
+    <div class ="wrap">
+        <a class="brand" href="index.html">Aoun Library</a>
+ 
+        <nav aria-label="Main">
+         <ul>
+            <li><a href="index.html" >Home</a></li>
+            <li><a href="aboutus.html"> About us</a></li>
+            <li><a href="contact.html"> Contact us</a></li>
+            <li><a href="request.html" aria-current="page"> Request a book</a></li>
+        </ul>
+      </nav>
+     </div>
+</header>  
+<!-- submit request form -->
+<main class="wrap page" id="main">
+  <h1>Request a Book</h1>
+  <p>If you can't find the book you're looking for in our catalog, you can request it here. Please fill out the form below and we will notify you when the book becomes available.</p>
+  <form action="submit_request.php" method="post">
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Your Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="book">Book Title:</label>
+    <input type="text" id="book" name="book" required>
+
+    <label for="author">Author:</label>
+    <input type="text" id="author" name="author">
+
+    <label for="extra">Anything else you'd like to add:</label>
+    <input type="text" id="extra" name="extra">
+
+    <button class="btn" type="submit">Submit Request</button>
+  </form>
+</main>
+
+</body>
+</html>

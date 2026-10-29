@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 viewport-fit=cover">
+    <title>Book availability</title>
+    <!--link css file to html-->
+    <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body>
+    <a class="skip" href="#catalog">Skip to booklist</a>
+
+<header class="siteheader">
+    <div class ="wrap">
+        <a class="brand" href="index.html">Aoun Library</a>
+        <!--Navagation-->
+        <nav aria-label="Main">
+         <ul>
+            <li><a href="index.html" aria-current="page"> Home </a></li>
+            <li><a href="aboutus.html"> About us</a></li>
+            <li><a href="contact.html"> Contact us</a></li>
+            <li><a href="request.html"> Request a book</a></li>
+        </ul>
+      </nav>
+     </div>
+</header>  
+ <!-- Page title and a short description-->
+  <div class ="intro">
+    <div class="wrap">
+   <h1>Is your book on the shelf?</h1>
+      <p class="lede">Check to see which books you can borrow today !</p>
+     </div>
+    </div>
+    <!--Main filters and the book list-->
+    <main class="wrap" id="main">
+        <fieldset class="filter">
+            <legend>Status</legend>
+            <div class="options">
+              <input type="radio" name="status" id="f-all" checked><label for="f-all">All books</label>
+              <input type="radio" name="status" id="f-available"><label for="f-available">Available</label>
+              <input type="radio" name="status" id="f-out"><label for="f-out">Checked out</label>
+              <input type="radio" name="status" id="f-hold"><label for="f-hold">On hold</label>
+            </div>
+        </fieldset>
+    <!-- Category filter-->     
+        <fieldset class="filter">
+          <legend>Category</legend>
+          <div class="options">
+            <input type="radio" name="category" id="c-all" checked><label for="c-all">All categories</label>
+            <input type="radio" name="category" id="c-fiction"><label for="c-fiction">Fiction</label>
+            <input type="radio" name="category" id="c-nonfiction"><label for="c-nonfiction">Nonfiction</label>
+          </div>
+        </fieldset>
+        <!-- Heading name for screen reader-->
+          <h2 id="catalog" class="visually-hidden">Book list</h2>
+        <!--booklist-->
+   <li class="book" data-cat="fiction" data-status="available" style="--spine:#14595b">
+      <h3>The Remains of the Day</h3>
+      <p class="author">Kazuo Ishiguro</p>
+      <p class="shelf">Fiction  Shelf F ISH</p>
+      <p class="status"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Available</p>
+      <p class="note">2 of 2 copies on the shelf</p>
+    </li>
+    <!--booklist, checked out book-->
+        <li class="book" data-cat="nonfiction" data-status="out" style="--spine:#8a2b1f">
+          <h3>Braiding Sweetgrass</h3>
+          <p class="author">Robin Wall Kimmerer</p>
+          <p class="shelf">Nonfiction Shelf 508 KIM</p>
+          <p class="status"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>Checked out</p>
+          <p class="note">Due back <time datetime="2026-11-04">November 4</time></p>
+        </li>
+            <!-- books on hold -->
+            <li class="book" data-cat="fiction" data-status="hold" style="--spine:#7a5a00">
+              <h3>Pachinko</h3>
+              <p class="author">Min Jin Lee</p>
+              <p class="shelf">Fiction  Shelf F LEE</p>
+              <p class="status"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M10 6v4.5l3 1.5"/></svg>On hold</p>
+              <p class="note">Set aside for a reader. Ask at the desk.</p>
+            </li>
+         
+            <li class="book" data-cat="nonfiction" data-status="available" style="--spine:#3b4f8a">
+              <h3>A Brief History of Time</h3>
+              <p class="author">Stephen Hawking</p>
+              <p class="shelf">Science  Shelf 523 HAW</p>
+              <p class="status"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Available</p>
+              <p class="note">1 of 3 copies on the shelf</p>
+            </li>
+              <li class="book" data-cat="fiction" data-status="out" style="--spine:#6b2f6b">
+                  <h3>Their Eyes Were Watching God</h3>
+                  <p class="author">Zora Neale Hurston</p>
+                  <p class="shelf">Fiction  Shelf F HUR</p>
+                  <p class="status"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>Checked out</p>
+                  <p class="note">Due back <time datetime="2026-11-09">November 9</time></p>
+                </li>
+             
+                <li class="book" data-cat="nonfiction" data-status="available" style="--spine:#2f6b3e">
+                  <h3>Salt, Fat, Acid, Heat</h3>
+                  <p class="author">Samin Nosrat</p>
+                  <p class="shelf">Cooking  Shelf 641 NOS</p>
+                  <p class="status"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Available</p>
+                  <p class="note">1 of 1 copy on the shelf</p>
+                </li>
+             
+                <li class="book" data-cat="nonfiction" data-status="hold" style="--spine:#a0522d">
+                  <h3>The Warmth of Other Suns</h3>
+                  <p class="author">Isabel Wilkerson</p>
+                  <p class="shelf">History  Shelf 304 WIL</p>
+                  <p class="status"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M10 6v4.5l3 1.5"/></svg>On hold</p>
+                  <p class="note">Set aside for a reader. Ask at the desk.</p>
+                </li>
+             
+                <li class="book" data-cat="fiction" data-status="out" style="--spine:#1b2430">
+                  <h3>Piranesi</h3>
+                  <p class="author">Susanna Clarke</p>
+                  <p class="shelf">Fiction  Shelf F CLA</p>
+                  <p class="status"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>Checked out</p>
+                  <p class="note">Due back <time datetime="2026-11-12">November 12</time></p>
+                </li>
+             
+              </ul>
+    </main>
+</body>
+</html>
